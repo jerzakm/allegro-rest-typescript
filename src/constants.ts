@@ -1,0 +1,1 @@
+export const ALLEGRO_URL = `https://allegro.pl`
