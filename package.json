@@ -1,0 +1,36 @@
+{
+  "name": "allegro-rest-typescript",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack",
+    "run": "nodemon build/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jerzakm/allegro-rest-typescript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jerzakm/allegro-rest-typescript/issues"
+  },
+  "homepage": "https://github.com/jerzakm/allegro-rest-typescript#readme",
+  "description": "",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.0",
+    "@types/node": "^12.7.0",
+    "nodemon": "^1.19.1",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.3",
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6",
+    "webpack-node-externals": "^1.7.2",
+    "webpack-shell-plugin": "^0.5.0"
+  }
+}
