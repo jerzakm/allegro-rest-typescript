@@ -1,29 +1,19 @@
 import * as axios from 'axios'
 import { ALLEGRO_URL } from '../constants';
 
-export const getAuth = (clientBase64: string)=> {
-  return axios.default({
-    method: 'post',
-    url: `${ALLEGRO_URL}/auth/oauth/token?grant_type=client_credentials`,
-    headers: {
-      Authorization: `Basic ${clientBase64}`
-    }
-  }).catch(function (error) {
-    if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
-      console.log(error.response.data);
-      console.log(error.response.status);
-      // console.log(error.response.headers);
-    } else if (error.request) {
-      // The request was made but no response was received
-      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-      // http.ClientRequest in node.js
-      console.log(error.request);
-    } else {
-      // Something happened in setting up the request that triggered an Error
-      console.log('Error', error.message);
-    }
-    console.log(error.config);
+export const getAuth = (clientBase64: string):Promise<string> => {
+  return new Promise((resolve,reject)=> {
+    axios.default({
+      method: 'post',
+      url: `${ALLEGRO_URL}/auth/oauth/token?grant_type=client_credentials`,
+      headers: {
+        Authorization: `Basic ${clientBase64}`
+      }
+    }).then((response)=>{
+      const res:string = response.data.access_token         
+      resolve(res)
+    }).catch(function (error) {
+      reject(error)
+    })
   })
 }
