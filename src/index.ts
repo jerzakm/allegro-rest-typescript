@@ -1,3 +1,4 @@
+const fs = require('fs')
 import * as axios from 'axios'
 import { getAuth } from './Auth/clientCredentials';
 import { base64StringEncode } from './util/crypto';
@@ -15,6 +16,5 @@ async function test() {
   const clientSecret = process.env.ALLEGRO_CLIENT_SECRET
   
   const authToken = await getAuth(base64StringEncode(`${cliendId}:${clientSecret}`))
-  const categoryTree = getCategoryTree(authToken)
-  console.log(categoryTree)
+  const categoryTree = await getCategoryTree(authToken)  
 }

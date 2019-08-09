@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack",
-    "run": "nodemon build/index.js"
+    "run": "nodemon build/index.js --ignore *.json"
   },
   "repository": {
     "type": "git",

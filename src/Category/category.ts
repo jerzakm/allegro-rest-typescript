@@ -1,6 +1,8 @@
 import * as axios from 'axios'
 import { ALLEGRO_API_URL } from '../constants';
 import { Category } from './categoryInterfaces';
+import { sleep } from '../util/sleep';
+const fs = require('fs')
 
 //Allegro main category id
 export const ALLEGRO_TOP_CATEGORY_ID = '954b95b6-43cf-4104-8354-dea4d9b10ddf' 
@@ -27,20 +29,50 @@ export const getCategoryChildren = (authToken: string, parent: string):Promise<C
 }
 
 export const getCategoryTree = (authToken: string) => {
-    const categoryArray:Category[] = []
+    return new Promise((resolve, reject) => {
+        const categoryArray:Category[] = []
 
-    iterateCategoryTree(ALLEGRO_TOP_CATEGORY_ID)
+        let counter = 0
 
-    async function iterateCategoryTree(id:string) {
-        const catData = await getCategoryChildren(authToken, id)
-        categoryArray.push(...catData)
+        iterateCategoryTree(ALLEGRO_TOP_CATEGORY_ID)
 
-        catData.map(category => {
-            if(!category.leaf){
-                iterateCategoryTree(category.id)
-            }
-        })
-    }
+        async function iterateCategoryTree(id:string) {
+            const catData = await getCategoryChildren(authToken, id)        
+            counter++
+            console.log(counter)
+            await sleep(1000)
+            categoryArray.push(...catData)
+
+            catData.map(category => {
+                if(!category.leaf){
+                    iterateCategoryTree(category.id)
+                }
+            })
+        }    
+        resolve(categoryArray)
+    });
+
+    // const categoryArray:Category[] = []
+
+    // let counter = 0
+
+    // iterateCategoryTree(ALLEGRO_TOP_CATEGORY_ID)
+
+    // async function iterateCategoryTree(id:string) {
+    //     const catData = await getCategoryChildren(authToken, id)        
+    //     counter++
+    //     console.log(counter)
+    //     await sleep(10)
+    //     categoryArray.push(...catData)
+
+    //     catData.map(category => {
+    //         if(!category.leaf){
+    //             iterateCategoryTree(category.id)
+    //         }
+    //     })
+    // }
+
+    // return categoryArray
 }
 
 export interface CategoryTree {
