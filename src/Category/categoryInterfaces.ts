@@ -7,7 +7,7 @@ export interface CategoryOptions {
 }
 
 export interface Category {
-    id: number
+    id: string
     leaf: boolean
     name: string
     options: CategoryOptions
@@ -15,5 +15,5 @@ export interface Category {
 }
 
 export interface CategoryParent {
-    id: number
+    id: string
 }

@@ -19,9 +19,31 @@ export const getCategoryChildren = (authToken: string, parent: string):Promise<C
                 'parent.id': parent
             }
           }).then((response)=>{                        
-            resolve(response.data)
+            resolve(response.data.categories)
           }).catch(function (error) {
             reject(error)
           })
     });
+}
+
+export const getCategoryTree = (authToken: string) => {
+    const categoryArray:Category[] = []
+
+    iterateCategoryTree(ALLEGRO_TOP_CATEGORY_ID)
+
+    async function iterateCategoryTree(id:string) {
+        const catData = await getCategoryChildren(authToken, id)
+        categoryArray.push(...catData)
+
+        catData.map(category => {
+            if(!category.leaf){
+                iterateCategoryTree(category.id)
+            }
+        })
+    }
+}
+
+export interface CategoryTree {
+    category: Category,
+    children: CategoryTree[]
 }
