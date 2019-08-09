@@ -17,4 +17,12 @@ async function test() {
   
   const authToken = await getAuth(base64StringEncode(`${cliendId}:${clientSecret}`))
   const categoryTree = await getCategoryTree(authToken)  
+
+  fs.writeFile("test.json", JSON.stringify(categoryTree), function(err) {
+    if(err) {
+        return console.log(err);
+    }
+
+    console.log("The file was saved!");
+})
 }

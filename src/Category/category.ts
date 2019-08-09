@@ -28,51 +28,31 @@ export const getCategoryChildren = (authToken: string, parent: string):Promise<C
     });
 }
 
-export const getCategoryTree = (authToken: string) => {
-    return new Promise((resolve, reject) => {
-        const categoryArray:Category[] = []
+export const getCategoryTree = async (authToken: string) => {
+    const categoryArray:Category[] = []
+    const queue: string[] = [ALLEGRO_TOP_CATEGORY_ID]
 
-        let counter = 0
+    let counter = 0
 
-        iterateCategoryTree(ALLEGRO_TOP_CATEGORY_ID)
-
-        async function iterateCategoryTree(id:string) {
-            const catData = await getCategoryChildren(authToken, id)        
-            counter++
-            console.log(counter)
-            await sleep(1000)
-            categoryArray.push(...catData)
-
-            catData.map(category => {
+    while(queue.length>0){        
+        try {
+            const data = await getCategoryChildren(authToken, queue[0])
+            console.log(`${counter} ${queue[0]}`)
+            queue.shift()
+            counter ++
+            for(const category of data){
+                categoryArray.push(category)
                 if(!category.leaf){
-                    iterateCategoryTree(category.id)
+                    queue.push(category.id)
                 }
-            })
-        }    
-        resolve(categoryArray)
-    });
+            }
+        }        
+        catch(e){
+            console.log(e)
+        }
+    }
 
-    // const categoryArray:Category[] = []
-
-    // let counter = 0
-
-    // iterateCategoryTree(ALLEGRO_TOP_CATEGORY_ID)
-
-    // async function iterateCategoryTree(id:string) {
-    //     const catData = await getCategoryChildren(authToken, id)        
-    //     counter++
-    //     console.log(counter)
-    //     await sleep(10)
-    //     categoryArray.push(...catData)
-
-    //     catData.map(category => {
-    //         if(!category.leaf){
-    //             iterateCategoryTree(category.id)
-    //         }
-    //     })
-    // }
-
-    // return categoryArray
+    return categoryArray
 }
 
 export interface CategoryTree {
