@@ -28,6 +28,24 @@ export const getCategoryChildren = (authToken: string, parent: string):Promise<C
     });
 }
 
+export const getCategoryById = (authToken: string, categoryId: string):Promise<Category> => {
+    return new Promise((resolve, reject) => {
+        axios.default({
+            method: 'get',
+            url: `${ALLEGRO_API_URL}/sale/categories/${categoryId}`,
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+              Accept: 'application/vnd.allegro.public.v1+json',
+              'content-type': 'application/vnd.allegro.public.v1+json'
+            }
+          }).then((response)=>{                        
+            resolve(response.data)
+          }).catch(function (error) {
+            reject(error)
+          })
+    });
+}
+
 export const getCategoryTree = async (authToken: string) => {
     const categoryArray:Category[] = []
     const queue: string[] = [ALLEGRO_TOP_CATEGORY_ID]
