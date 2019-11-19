@@ -63,5 +63,4 @@ typings/
 /build
 package-lock.json
 
-test.json
-test2.json
+*.json
