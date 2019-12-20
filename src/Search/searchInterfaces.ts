@@ -1,8 +1,8 @@
 export interface SearchOptions {
     categoryId?: string
     phrase?: string
-    sellerID?: string
-    searchMode?: SearchMode    
+    sellerId?: string
+    searchMode?: SearchMode
     offset: number
     limit?: number
     sort?: SearchSort
